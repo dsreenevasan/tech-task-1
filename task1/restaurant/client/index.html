@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Joey Restaurants</title>
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap/dist/css/bootstrap.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/1.1.0/toaster.min.css" rel="stylesheet" />
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="main.js"></script>
+    <script src="lib/angular-animate/angular-animate.min.js" ></script>
+    <script src="lib/AngularJS-Toaster/toaster.min.js"></script>
+    <style>
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            margin: 0;
+        }
+    </style>
+</head>
+<body style="background: url('home-page.jpg') no-repeat; background-size:  100% ; ">
+<img src="logo.jpg" />
+<div ng-controller="RestaurantController as ctrl" >
+    <div class="column col-lg-1" style="height: 100px"></div>
+    <div class="row column col-md-12">
+        <div class="column col-md-4"></div>
+        <div class="column col-md-5" ng-show="ctrl.orderPlaced == false" style="font-family: Roboto; background: url('menu.jpg') no-repeat; background-size: 80% 100%; color: white; height: 575px">
+            <div style="margin-top: 20%" >
+                <div class="row">
+                    <div class="column col-md-4">
+                        <h3 style="margin-left: 25%">Name</h3>
+                    </div>
+                    <div class="column col-md-2">
+                        <h3>Price</h3>
+                    </div>
+                    <div class="column col-md-3" >
+                        <h3>Quantity</h3>
+                    </div>
+                </div>
+                <div class="row" ng-repeat="item in ctrl.menu">
+                    <div class="column col-md-4">
+                        <h4 style="margin-left: 25%">{{item.name}}</h4>
+                    </div>
+                    <div class="column col-md-2">
+                        <h5>{{item.price}}</h5>
+                    </div>
+                    <div class="column col-md-3" style="color: black">
+                        <button type="button" ng-click="ctrl.changeQuantity(1,$index)" class="btn btn-xs btn-warning">
+                            <i class="glyphicon glyphicon-minus-sign"></i>
+                        </button>
+                        <input style="width:50px; text-align: center" ng-min="0" type="number" ng-change="ctrl.calcTotalAmount()" ng-model="item.amount">
+                        <button type="button" ng-click="ctrl.changeQuantity(2,$index)" class="btn btn-xs btn-success">
+                            <i class="glyphicon glyphicon-plus-sign"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column col-md-4" style="margin-left: 25%">
+                        <h3>Total Amount:</h3>
+                    </div>
+                    <div class="column col-md-3">
+                        <h3>{{ctrl.totalAmount}}</h3>
+                    </div>
+                </div>
+                <br>
+                <button type="button" style="margin-left: 23%" ng-click="ctrl.placeOrder()"  class="btn btn-xs btn-success"><h4>Place Order</h4>
+                </button>
+                <button type="button" style="margin-left: 3%; width: 100px"  class="btn btn-xs btn-danger"><h4>Cancel</h4>
+                </button>
+            </div>
+        </div>
+        <div class="column col-md-5" ng-if="ctrl.orderPlaced"  style="font-family: Roboto; background: url('bill.jpg') no-repeat; background-size: 80% 100%; color: white; height: 575px">
+            <div style="margin-top:5%" >
+                <h2 style="margin-left:10%; color: yellow"><b>Voila! Your Order is getting ready!</b></h2>
+                <div class="row">
+                    <div class="column col-md-4">
+                        <h3 style="margin-left: 25%">Name</h3>
+                    </div>
+                    <div class="column col-md-2">
+                        <h3>Price</h3>
+                    </div>
+                    <div class="column col-md-3" >
+                        <h3>Quantity</h3>
+                    </div>
+                </div>
+                <div class="row" ng-repeat="item in ctrl.menu" ng-if="item.amount > 0">
+                    <div class="column col-md-4">
+                        <h4 style="margin-left: 25%">{{item.name}}</h4>
+                    </div>
+                    <div class="column col-md-2">
+                        <h5>{{item.price}}</h5>
+                    </div>
+                    <div class="column col-md-3" >
+                        <h5>{{item.amount}}</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column col-md-4" style="margin-left: 25%">
+                        <h3>Total Amount:</h3>
+                    </div>
+                    <div class="column col-md-3">
+                        <h3>{{ctrl.totalAmount}}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<script type="text/ng-template" id="dropdown.html">
+    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="button-template-url">
+      <li role="menuitem"><a href="#">Action in Template</a></li>
+      <li role="menuitem"><a href="#">Another action in Template</a></li>
+      <li role="menuitem"><a href="#">Something else here</a></li>
+      <li class="divider"></li>
+      <li role="menuitem"><a href="#">Separated link in Template</a></li>
+    </ul>
+</script>-->
+</div>
+</body>
+</html>
